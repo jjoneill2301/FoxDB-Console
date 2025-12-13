@@ -1,61 +1,130 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+// add confirmation, handling, and validation 
+
 using FoxDB.Models;
 using FoxDB.Services;
+
 namespace FoxDB.Menus
 {
-    internal class CustomersMenu
+    public class CustomersMenu
     {
         private readonly CustomersServices _customersServices;
-
-        public CustomersMenu()
-        {
-        }
 
         public CustomersMenu(CustomersServices customersServices)
         {
             _customersServices = customersServices;
         }
 
-        public void CMenu()
+
+        
+        public void showMenu()
         {
-            Console.WriteLine("Select an option for Customers Table:");
-            Console.WriteLine("1) Create");
-            Console.WriteLine("2) Show");
-            Console.WriteLine("3) Update");
-            Console.WriteLine("4) Delete");
-            string input = Console.ReadLine();
-            switch (input)
+            bool isOpen = true;
+            while (isOpen)
             {
-                case "1":
-                    Console.WriteLine("First name >> ");
-                    string fName = Console.ReadLine();
-                    Console.WriteLine("Last name >> ");
-                    string lName = Console.ReadLine();
-                    Console.WriteLine("Email address >> ");
-                    string email = Console.ReadLine();
-                    Customer c = new Customer
-                    {
-                        Email = email,
-                        FirstName = fName,
-                        LastName = lName
-                    };
-                    _customersServices.Create(c);
-                    break;
-                case "2":
-                    foreach (var i in _customersServices.GetAll())
-                        Console.WriteLine("");
-                    break;
-                // Additional cases for Read, Update, Delete can be added here
-                default:
-                    Console.WriteLine("Invalid option.");
-                    break;
+                Console.WriteLine("Select an option for Customers Table:");
+                Console.WriteLine("1) Create");
+                Console.WriteLine("2) Show");
+                Console.WriteLine("3) Update");
+                Console.WriteLine("4) Delete");
+                string input = Console.ReadLine();
+                
+                switch (input)
+                {
+                    case "1":
+                        Create();
+                        break;
+                    case "2":
+                        Read();
+                        break;
+                    case "3":
+                        UpdateAll();
+                        break;
+                    case "4":
+                        Delete();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
+                }
             }
+
+
+
+
+        private void Create()
+        {
+            Console.WriteLine("first");
+            string firstName = Console.ReadLine();
+            Console.WriteLine("last");
+            string lastName = Console.ReadLine();
+            Console.WriteLine("email");
+            string email = Console.ReadLine()
+
+            var customer = new Customer
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email
+            };
+
+            _customersServices.Create(customer);
+             Console.WriteLine("Customer created successfully!");
         }
 
 
+
+            
+        private void Read()
+        {
+            Console.WriteLine("Enter Customer ID: ");
+            string id = Console.ReadLine(); // make this int
+
+            var customer = _customersServices.GetById(id);
+
+            Console.WriteLine($"ID: {customer.CustomerId}");
+            Console.WriteLine($"First Name: {customer.FirstName}");
+            Console.WriteLine($"Last Name: {customer.LastName}");
+            Console.WriteLine($"Email: {customer.Email}");
+        }
+
+
+
+        private void UpdateAll()
+        {
+            Console.WriteLine("Enter ID to update: ");
+            string id = Console.ReadLine(); // make this int
+
+            var customer = _customersServices.GetById(id);
+            
+            Console.Write("New first name: ");
+            customer.FirstName = Console.ReadLine();
+                
+            Console.Write("New last name: ");
+            customer.LastName = Console.ReadLine();
+
+            Console.Write("New email: ");
+            customer.Email = Console.ReadLine();
+
+            _customersServices.UpdateAll(customer);
+            Console.WriteLine("Customer updated");
+        }
+
+
+
+
+        private void Delete()
+        {
+            Console.WriteLine("Enter ID: ");
+            string id = Console.ReadLine(); //make int
+
+            var targetCustomer = _customersServices.GetById(id);
+            
+            _customersService.Delete(id);
+            Console.WriteLine("Customer deleted");    
+        }
+
+            
+            
+        }
     }
 }
