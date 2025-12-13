@@ -31,14 +31,14 @@ namespace FoxDB.Menus
                 // can just call showMenu can keep them same name because its clear with the intention by the way u call it "customersMenu".showMenu 
                         customersMenu.showMenu();
                         break;
-                    case "2":
-                        var ordersMenu = _serviceProvider.GetRequiredService<OrdersMenu>();
-                        ordersMenu.showMenu();
-                        break;
-                    case "3":
-                        var productsMenu = _serviceProvider.GetRequiredService<ProductsMenu>();
-                        productsMenu.showMenu();
-                        break;
+                    //case "2":
+                    //    var ordersMenu = _serviceProvider.GetRequiredService<OrdersMenu>();
+                    //    ordersMenu.showMenu();
+                    //    break;
+                    //case "3":
+                    //    var productsMenu = _serviceProvider.GetRequiredService<ProductsMenu>();
+                    //    productsMenu.showMenu();
+                    //    break;
                     default:
                         WriteLine("\nGoodbye!");
                         isOpen = false;

@@ -15,7 +15,7 @@ namespace FoxDB.Menus
         }
 
 
-        
+
         public void showMenu()
         {
             bool isOpen = true;
@@ -27,19 +27,23 @@ namespace FoxDB.Menus
                 Console.WriteLine("3) Update");
                 Console.WriteLine("4) Delete");
                 string input = Console.ReadLine();
-                
+
                 switch (input)
                 {
                     case "1":
                         Create();
+                        isOpen = false;
                         break;
                     case "2":
                         Read();
+                        isOpen = false;
                         break;
                     case "3":
+                        isOpen = false;
                         UpdateAll();
                         break;
                     case "4":
+                        isOpen = false;
                         Delete();
                         break;
                     default:
@@ -48,7 +52,7 @@ namespace FoxDB.Menus
                 }
             }
 
-
+        }
 
 
         private void Create()
@@ -58,7 +62,7 @@ namespace FoxDB.Menus
             Console.WriteLine("last");
             string lastName = Console.ReadLine();
             Console.WriteLine("email");
-            string email = Console.ReadLine()
+            string email = Console.ReadLine();
 
             var customer = new Customer
             {
@@ -77,14 +81,22 @@ namespace FoxDB.Menus
         private void Read()
         {
             Console.WriteLine("Enter Customer ID: ");
-            string id = Console.ReadLine(); // make this int
+            try
+            {
+                int id = int.Parse(Console.ReadLine()); // make this int
+                var customer = _customersServices.GetById(id);
 
-            var customer = _customersServices.GetById(id);
-
-            Console.WriteLine($"ID: {customer.CustomerId}");
-            Console.WriteLine($"First Name: {customer.FirstName}");
-            Console.WriteLine($"Last Name: {customer.LastName}");
-            Console.WriteLine($"Email: {customer.Email}");
+                Console.WriteLine($"ID: {customer.CustomerId}");
+                Console.WriteLine($"First Name: {customer.FirstName}");
+                Console.WriteLine($"Last Name: {customer.LastName}");
+                Console.WriteLine($"Email: {customer.Email}");
+            }
+            catch(FormatException e)
+            {
+                Console.WriteLine("Invalid ID format. Please enter a valid integer.");
+                Read();
+                return;
+            }
         }
 
 
@@ -92,21 +104,29 @@ namespace FoxDB.Menus
         private void UpdateAll()
         {
             Console.WriteLine("Enter ID to update: ");
-            string id = Console.ReadLine(); // make this int
+            try
+            {                   
+                int id = int.Parse(Console.ReadLine());                                                 
+                var customer = _customersServices.GetById(id);
 
-            var customer = _customersServices.GetById(id);
-            
-            Console.Write("New first name: ");
-            customer.FirstName = Console.ReadLine();
-                
-            Console.Write("New last name: ");
-            customer.LastName = Console.ReadLine();
+                Console.Write("New first name: ");
+                customer.FirstName = Console.ReadLine();
 
-            Console.Write("New email: ");
-            customer.Email = Console.ReadLine();
+                Console.Write("New last name: ");
+                customer.LastName = Console.ReadLine();
 
-            _customersServices.UpdateAll(customer);
-            Console.WriteLine("Customer updated");
+                Console.Write("New email: ");
+                customer.Email = Console.ReadLine();
+
+                _customersServices.UpdateAll(customer);
+                Console.WriteLine("Customer updated");
+            }
+            catch(FormatException e)
+            {
+                Console.WriteLine("Invalid ID format. Please enter a valid integer.");
+                UpdateAll();
+                return;
+            }
         }
 
 
@@ -115,16 +135,18 @@ namespace FoxDB.Menus
         private void Delete()
         {
             Console.WriteLine("Enter ID: ");
-            string id = Console.ReadLine(); //make int
-
-            var targetCustomer = _customersServices.GetById(id);
-            
-            _customersService.Delete(id);
-            Console.WriteLine("Customer deleted");    
+            try
+            {
+                int id = int.Parse(Console.ReadLine());
+                var targetCustomer = _customersServices.GetById(id);
+                _customersServices.Delete(id);
+                Console.WriteLine("Customer deleted");
+            }
+            catch(FormatException e)
+            {
+                Console.WriteLine("Invalid ID format. Please enter a valid integer.");
+            }
         }
 
-            
-            
-        }
     }
 }

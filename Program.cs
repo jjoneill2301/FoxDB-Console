@@ -22,14 +22,14 @@ Scaffold-DbContext "Server=PC\MSSQLSERVER01;Database=Fox;Trusted_Connection=True
                // .AddScoped AddDbContext AddTransient and buiilderserviceprovider are all from the DI Package Microsoft.Extensions.DependencyInjection
                // DI W/ Scoped lifetime for context
                .AddDbContext<FoxContext>()
-               .AddScoped<CustomersService>()
-               .AddScoped<ProductsService>()
-               .AddScoped<OrdersService>()
+               .AddScoped<CustomersServices>()
+               .AddScoped<ProductsServices>()
+               .AddScoped<OrdersServices>()
                //menu holds no data so make it transient
                 .AddTransient<MainMenu>()
                 .AddTransient<CustomersMenu>()
-                .AddTransient<OrdersMenu>()
-                .AddTransient<ProductsMenu>()
+                //.AddTransient<OrdersMenu>()
+                //.AddTransient<ProductsMenu>()
                //make immutable provider
                 .BuildServiceProvider();
 
@@ -37,7 +37,7 @@ Scaffold-DbContext "Server=PC\MSSQLSERVER01;Database=Fox;Trusted_Connection=True
             using var scope = serviceProvider.CreateScope();
             //injects di into main
             var mainMenu = scope.ServiceProvider.GetRequiredService<MainMenu>();
-            mainMenu.ShowMenu();
+            mainMenu.showMenu();
             
         }
     }
