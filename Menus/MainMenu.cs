@@ -21,8 +21,8 @@ namespace FoxDB.Menus
           {
             WriteLine("Management Menu enter 1-3: ");
             WriteLine("1 Customers Menu");
-            WriteLine("2 Products Menu");
-            WriteLine("3 Orders Menu");
+            WriteLine("2 Orders Menu");
+            WriteLine("3 Products Menu");
             string input = ReadLine();
             switch (input)
                 {
@@ -31,14 +31,14 @@ namespace FoxDB.Menus
                 // can just call showMenu can keep them same name because its clear with the intention by the way u call it "customersMenu".showMenu 
                         customersMenu.showMenu();
                         break;
-                    //case "2":
-                    //    var ordersMenu = _serviceProvider.GetRequiredService<OrdersMenu>();
-                    //    ordersMenu.showMenu();
-                    //    break;
-                    //case "3":
-                    //    var productsMenu = _serviceProvider.GetRequiredService<ProductsMenu>();
-                    //    productsMenu.showMenu();
-                    //    break;
+                    case "2":
+                        var ordersMenu = _serviceProvider.GetRequiredService<OrdersMenu>();
+                        ordersMenu.showMenu();
+                        break;
+                    case "3":
+                        var productsMenu = _serviceProvider.GetRequiredService<ProductsMenu>();
+                        productsMenu.showMenu();
+                        break;
                     default:
                         WriteLine("\nGoodbye!");
                         isOpen = false;

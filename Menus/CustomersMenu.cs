@@ -91,11 +91,15 @@ namespace FoxDB.Menus
                 Console.WriteLine($"Last Name: {customer.LastName}");
                 Console.WriteLine($"Email: {customer.Email}");
             }
-            catch(FormatException e)
+            catch(FormatException)
             {
                 Console.WriteLine("Invalid ID format. Please enter a valid integer.");
                 Read();
-                return;
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine("Error retrieving customer: Customer ID does not exist.");
+                Read();
             }
         }
 
@@ -119,13 +123,17 @@ namespace FoxDB.Menus
                 customer.Email = Console.ReadLine();
 
                 _customersServices.UpdateAll(customer);
-                Console.WriteLine("Customer updated");
+                Console.WriteLine("Customer updated successfully.");
             }
             catch(FormatException e)
             {
                 Console.WriteLine("Invalid ID format. Please enter a valid integer.");
                 UpdateAll();
-                return;
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine("Error retrieving customer: Customer ID does not exist.");
+                UpdateAll();
             }
         }
 
@@ -138,13 +146,18 @@ namespace FoxDB.Menus
             try
             {
                 int id = int.Parse(Console.ReadLine());
-                var targetCustomer = _customersServices.GetById(id);
                 _customersServices.Delete(id);
-                Console.WriteLine("Customer deleted");
+                Console.WriteLine("Customer deleted successfully.");
             }
             catch(FormatException e)
             {
                 Console.WriteLine("Invalid ID format. Please enter a valid integer.");
+                Delete();
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine("Error deleting customer: Customer ID does not exist.");
+                Delete();
             }
         }
 

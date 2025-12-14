@@ -28,9 +28,9 @@ Scaffold-DbContext "Server=PC\MSSQLSERVER01;Database=Fox;Trusted_Connection=True
                //menu holds no data so make it transient
                 .AddTransient<MainMenu>()
                 .AddTransient<CustomersMenu>()
-                //.AddTransient<OrdersMenu>()
-                //.AddTransient<ProductsMenu>()
-               //make immutable provider
+                .AddTransient<OrdersMenu>()
+                .AddTransient<ProductsMenu>()
+                //make immutable provider
                 .BuildServiceProvider();
 
             //create scope
